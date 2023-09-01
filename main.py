@@ -3,6 +3,93 @@ import xml.dom.minidom
 from operator import itemgetter
 import json
 
+def rom2hir(r):
+    r2h = {
+        "a": "あ",
+        "i": "い",
+        "u": "う",
+        "e": "え",
+        "o": "お",
+        "ka": "か",
+        "ki": "き",
+        "ku": "く",
+        "ke": "け",
+        "ko": "こ",
+        "ga": "が",
+        "gi": "ぎ",
+        "gu": "ぐ",
+        "ge": "げ",
+        "go": "ご",
+        "sa": "さ",
+        "shi": "し",
+        "si": "し",
+        "su": "す",
+        "se": "せ",
+        "so": "そ",
+        "za": "ざ",
+        "ji": "じ",
+        "zi": "じ",
+        "zu": "ず",
+        "ze": "ぜ",
+        "zo": "ぞ",
+        "ta": "た",
+        "chi": "ち",
+        "ti": "ち",
+        "tsu": "つ",
+        "tu": "つ",
+        "te": "て",
+        "to": "と",
+        "da": "だ",
+        "di": "ぢ",
+        "du": "づ",
+        "de": "で",
+        "do": "ど",
+        "na": "な",
+        "ni": "に",
+        "nu": "ぬ",
+        "ne": "ね",
+        "no": "の",
+        "ha": "は",
+        "hi": "ひ",
+        "fu": "ふ",
+        "hu": "ふ",
+        "he": "へ",
+        "ho": "ほ",
+        "ba": "ば",
+        "bi": "び",
+        "bu": "ぶ",
+        "be": "べ",
+        "bo": "ぼ",
+        "pa": "ぱ",
+        "pi": "ぴ",
+        "pu": "ぷ",
+        "pe": "ぺ",
+        "po": "ぽ",
+        "ma": "ま",
+        "mi": "み",
+        "mu": "む",
+        "me": "め",
+        "mo": "も",
+        "ya": "や",
+        "yu": "ゆ",
+        "yo": "よ",
+        "ra": "ら",
+        "ri": "り",
+        "ru": "る",
+        "re": "れ",
+        "ro": "ろ",
+        "wa": "わ",
+        "wo": "を",
+        "n": "ん"
+        }
+    
+    try:
+        r = r2h[r]
+    except:
+        pass
+    
+    return(r)
+
 def run():
     output_path = "output/st.txt"
     if not os.path.exists(output_path):
@@ -58,8 +145,12 @@ def run():
         output.close()        
         
     i = -1
+    
     while not i == "0":
         i = input("Starting kana: ")
+        
+        i = rom2hir(i)
+        
         try:
             kr = st_kana[i]
             for entry in kr:
