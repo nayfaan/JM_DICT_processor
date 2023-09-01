@@ -3,6 +3,9 @@ import xml.dom.minidom
 from operator import itemgetter
 import json
 
+global OUTPUT_PATH
+OUTPUT_PATH = "output/"
+
 def rom2hir(r):
     r2h = {
         "a": "あ",
@@ -90,9 +93,21 @@ def rom2hir(r):
     
     return(r)
 
+def write2File(t,p):
+    output = open(OUTPUT_PATH+p, 'w')
+    print(json.dumps(t), file = output)
+    output.close()
+
+def printJDict(jd):
+    write2File(jd,"full_dict.txt")
+    output_JDPlain = open(OUTPUT_PATH+"full_dict_plain.txt", 'w')
+    for entry in jd:
+        print(entry[0],"　",entry[1], file = output_JDPlain)
+    output_JDPlain.close()
+
 def run():
-    output_path = "output/st.txt"
-    if not os.path.exists(output_path):
+    st_name = "st.txt"
+    if not os.path.exists(OUTPUT_PATH+st_name):
         JMD = xml.dom.minidom.parse("input/JMdict.xml");
         print(JMD.nodeName)
         print(JMD.firstChild.tagName)
@@ -117,6 +132,8 @@ def run():
                         J_dict.append([k,""])
                 if not k:
                     J_dict.append(["",r])
+                    
+        printJDict(J_dict)
         
         st = list()
         for entry in J_dict:
@@ -136,11 +153,9 @@ def run():
             else:
                 st_kana[r[0]].append(entry)
         
-        output = open(output_path, 'w')
-        print(json.dumps(st_kana), file = output)
-        output.close()
+        write2File(st_kana,st_name)
     else:
-        output = open(output_path, 'r')
+        output = open(OUTPUT_PATH+st_name, 'r')
         st_kana = json.load(output)
         output.close()        
         
